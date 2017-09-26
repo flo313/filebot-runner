@@ -1,6 +1,6 @@
 #!/bin/sh -u
 
-echo '*** Filebot is watching on $1 foder ***'
+echo "*** Filebot is watching on $1 folder ***"
 inotifywait -m "$1" -e create -e moved_to -e modify --exclude '/[.@]' --format '%w%f' | stdbuf -oL uniq | while read -r FILE; do
 	# file may yield inode/x-empty for new files
 	sleep 2
