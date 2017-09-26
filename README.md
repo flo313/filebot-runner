@@ -1,4 +1,10 @@
-# filebot-watcher
+# About
+![Filebot](https://www.filebot.net/images/filebot.logo.svg)
+
+Filebot media management
+ 
+# Usage
+```
 CONTAINERNAME="Filebot"
 IMAGE="flo313/filebot-watcher"
 FILEBOTARGLIST="@/data/FileBotArgList"
@@ -7,13 +13,10 @@ CONTAINER_WDIR_PATH="/volume1:/volume1"
 
 DOCKER_OPTIONS="--restart unless-stopped -v $CONTAINER_DATA_PATH -v $CONTAINER_WDIR_PATH"
 docker run $DOCKER_OPTIONS --name $CONTAINERNAME -it $IMAGE /volume1/input $FILEBOTARGLIST
+```
 
-
-
-*********************************
-/data/FileBotArgList content
-*********************************
-
+# /data/FileBotArgList content
+```
 --output
 /volume1/output
 --action
@@ -38,3 +41,4 @@ reportError=y
 all
 --log-file
 /data/filebot.log
+```
