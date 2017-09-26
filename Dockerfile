@@ -4,7 +4,7 @@ ENV FILEBOT_VERSION 4.7.9
 
 WORKDIR /usr/share/filebot
 
-RUN FILEBOT_SHA256=892723dcec8fe5385ec6665db9960e7c1a88e459a60525c02afb7f1195a50523 \
+RUN FILEBOT_SHA256=7a07d3f7cca5c0b38ca811984ef8da536da32932d68c1a6cce33ec2462b930bf \
  && FILEBOT_PACKAGE=filebot_${FILEBOT_VERSION}_amd64.deb \
  && curl -L -O https://downloads.sourceforge.net/project/filebot/filebot/FileBot_$FILEBOT_VERSION/$FILEBOT_PACKAGE \
  && echo "$FILEBOT_SHA256 *$FILEBOT_PACKAGE" | sha256sum --check --strict \
@@ -15,7 +15,6 @@ RUN apt-get update && apt-get install -y \
     mediainfo \
     libchromaprint-tools \
     file \
-	mailutils \
     curl \
     inotify-tools \
  && rm -rf /var/lib/apt/lists/*
