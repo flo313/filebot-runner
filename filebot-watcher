@@ -16,10 +16,12 @@ inotifywait -m "$1" -e create -e moved_to -e modify --exclude '/[.@]' --format '
 		filebot -script fn:amc --action duplicate --conflict auto -non-strict --log-file amc.log --def excludeList=".excludes" unsorted=y music=y artwork=y "$@"
 		rc=$?	
 		filebot -script fn:cleaner "$1"
+		TO=`grep 'to=' /data/muttrc`
+		TO="${TO/to=/}"
 		if [[ $rc != 0 ]]; then		
-			cat /data/filebot.log | mutt -F /data/muttrc -s 'Filebot Error' canibis313@gmail.com
+			cat /data/filebot.log | mutt -F /data/muttrc -s 'Filebot Error' $TO
 		else
-			cat /data/filebot.log | mutt -F /data/muttrc -s 'Filebot successfully ended' canibis313@gmail.com
+			cat /data/filebot.log | mutt -F /data/muttrc -s 'Filebot successfully ended' $TO
 		fi
 		rm -rf /data/filebot.log
 	fi
