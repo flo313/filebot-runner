@@ -17,7 +17,9 @@ inotifywait -m "$1" -e create -e moved_to -e modify --exclude '/[.@]' --format '
 		rc=$?	
 		filebot -script fn:cleaner "$1"
 		TO=`grep 'to=' /data/muttrc`
+		echo GREP=$TO
 		TO="${TO/to=/}"
+		echo SUBST=$TO
 		if [[ $rc != 0 ]]; then		
 			cat /data/filebot.log | mutt -F /data/muttrc -s 'Filebot Error' $TO
 		else
