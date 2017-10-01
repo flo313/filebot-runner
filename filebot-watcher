@@ -15,13 +15,16 @@ inotifywait -m "$1" -e create -e moved_to -e modify --exclude '/[.@]' --format '
 	if file --mime-type "$FILE" | egrep "directory|video|audio|empty|octet-stream"; then
 		filebot -script fn:amc --action duplicate --conflict auto -non-strict --log-file amc.log --def excludeList=".excludes" unsorted=y music=y artwork=y "$@"
 		rc=$?	
-		filebot -script fn:cleaner "$1"
+		echo "*** FileBot Cleaner script ***" >> /data/filebot.log
+		filebot -script fn:cleaner "$1" >> /data/filebot.log
 		TO=`grep -oP '(?<=to=).*' /data/muttrc`
 		cat ../data/muttrc | head -n -1 > /data/muttrc1
 		if [ $rc -ne 0 ]; then		
 			cat /data/filebot.log | mutt -F /data/muttrc1 -s 'Filebot Error' $TO
 		else
-			cat /data/filebot.log | mutt -F /data/muttrc1 -s 'Filebot successfully ended' $TO
+			if ! grep -q "No files selected for processing" /data/filebot.log ; then
+				cat /data/filebot.log | mutt -F /data/muttrc1 -s 'Filebot successfully ended' $TO
+			fi
 		fi
 		rm -rf /data/filebot.log /data/muttrc1
 		echo Watches established.
