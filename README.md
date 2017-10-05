@@ -1,4 +1,3 @@
-# About
 ![Filebot](https://www.filebot.net/images/filebot.logo.svg)
 
 Filebot media management
@@ -33,7 +32,6 @@ animeFormat=Anime/{n}/{n} - {absolute} - {t}
 movieFormat=Movies/{n} - {y} - {vf}
 unsorted=y
 kodi=*******
-gmail=*******
 artwork=n
 excludeList=/data/excludeList.txt
 reportError=y
@@ -41,4 +39,25 @@ reportError=y
 all
 --log-file
 /data/filebot.log
+```
+# /data/muttrc content
+Here is the mutt configuration file used to allow mail notification.
+Info: The line "to=" isn't a mutt directive but it is used to define 
+the recipient of the mail.
+```
+set from = "UserMailAddress@gmail.com"
+set realname = "Name SURNAME"
+set imap_user = "UserMailAddress@gmail.com"
+set imap_pass = "password"
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+set postponed ="+[Gmail]/Drafts"
+set header_cache =~/.mutt/cache/headers
+set message_cachedir =~/.mutt/cache/bodies
+set certificate_file =~/.mutt/certificates
+set smtp_url = "smtp://UserMailAddress@smtp.gmail.com:587/"
+set smtp_pass = "password"
+set move = no 
+set imap_keepalive = 900
+to=UserMailAddress@gmail.com
 ```
