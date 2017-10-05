@@ -1,11 +1,10 @@
 #!/bin/sh -u
 
 echo "*** Filebot is watching on $1 folder ***"
-#inotifywait -r -m "$1" -e create -e moved_to -e modify --exclude '/[.@]' --format '%w%f' | stdbuf -oL uniq | while read -r FILE; do
-inotifywait -r -m "$1" -e create -e moved_to -e modify --exclude '/[.@]' --format '%w%f' | stdbuf -oL uniq | while read FILE; do
+inotifywait -r -m "$1" -e create -e moved_to -e modify --exclude '/[.@]' --format '%w%f' | stdbuf -oL uniq | while read -r FILE; do
 	# file may yield inode/x-empty for new files
 	sleep 2
-
+	echo "$FILE created, moved to or modified..."
 	# abort if the file has been modified while we were asleep
 	if [ `find "$FILE" -type f -newermt '2 seconds ago' -print -quit` ]; then
 		echo "Modified: $FILE"
