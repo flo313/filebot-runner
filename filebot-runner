@@ -1,0 +1,22 @@
+#!/bin/sh -u
+
+echo "*** Filebot is running $1 folder ***"
+while true; do
+	echo "*** FileBot AMC script ***"
+	filebot -script fn:amc "$1" "$@"
+	rc=$?	
+	echo "*** FileBot Cleaner script ***" >> /data/filebot.log
+	filebot -script fn:cleaner "$1" >> /data/filebot.log
+	TO=`grep -oP '(?<=to=).*' /data/muttrc`
+	cat ../data/muttrc | head -n -1 > /data/muttrc1
+	if [ $rc -ne 0 ]; then		
+		cat /data/filebot.log | mutt -F /data/muttrc1 -s 'Filebot Error' $TO
+	else
+		if ! grep -q "No files selected for processing" /data/filebot.log ; then
+			cat /data/filebot.log | mutt -F /data/muttrc1 -s 'Filebot successfully ended' $TO
+		fi
+	fi
+	rm -rf /data/filebot.log /data/muttrc1
+	echo "Waitting 3 minutes..."
+	sleep 3s
+done
