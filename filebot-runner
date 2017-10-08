@@ -18,5 +18,5 @@ while true; do
 	fi
 	rm -rf /data/filebot.log /data/muttrc1
 	echo "Waitting 3 minutes..."
-	sleep 3s
+	sleep 3m
 done
